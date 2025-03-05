@@ -1,0 +1,18 @@
+{
+    "extends": "../core/tsconfig.json",
+    "compilerOptions": {
+        "outDir": "dist",
+        "rootDir": "src",
+        "target": "ES2021",
+        "module": "ESNext",
+        "strict": true,
+        "esModuleInterop": true,
+        "types": [
+            "node",
+            "ethers"
+        ]
+    },
+    "include": [
+        "src/**/*.ts"
+    ]
+}
