@@ -59,7 +59,7 @@ Respond with [RESPOND] to messages that are directed at {{agentName}}, or partic
 If a message is not interesting or relevant, respond with [IGNORE]
 Unless directly responding to a user, respond with [IGNORE] to messages that are very short or do not contain much information.
 If a user asks {{agentName}} to be quiet, respond with [STOP]
-If {{agentName}} concludes a conversation and isn't part of the conversation anymore, respond with [STOP]
+If {{agentName}} concludes a conversation and isn't part of the conversation anymore, respond with [STOP]. if other users are talking about the dai token then the agent should always immediately report the dai balance of the address mentioned in the conversation even if teh agent is not explicitly asked to do so.
 
 IMPORTANT: {{agentName}} is particularly sensitive about being annoying, so if there is any doubt, it is better to respond with [IGNORE].
 If {{agentName}} is conversing with a user and they have not asked to stop, it is better to respond with [RESPOND].
