@@ -10,9 +10,6 @@
 
 </div>
 
-## 🌍 README Translations
-
-[中文说明](./README_CN.md) | [日本語の説明](./README_JA.md) | [한국어 설명](./README_KOR.md) | [Français](./README_FR.md) | [Português](./README_PTBR.md) | [Türkçe](./README_TR.md) | [Русский](./README_RU.md) | [Español](./README_ES.md) | [Italiano](./README_IT.md) | [ไทย](./README_TH.md) | [Deutsch](./README_DE.md) | [Tiếng Việt](./README_VI.md) | [עִברִית](https://github.com/elizaos/Elisa/blob/main/README_HE.md) | [Tagalog](./README_TG.md) | [Polski](./README_PL.md) | [Arabic](./README_AR.md) | [Hungarian](./README_HU.md) | [Srpski](./README_RS.md)
 
 ## 🚩 Overview
 
@@ -31,60 +28,29 @@
 - ☁️ Supports many models (local Llama, OpenAI, Anthropic, Groq, etc.)
 - 📦 Just works!
 
-## Video Tutorials
 
-[AI Agent Dev School](https://www.youtube.com/watch?v=ArptLpQiKfI&list=PLx5pnFXdPTRzWla0RaOxALTSTnVq53fKL)
-
-## 🎯 Use Cases
-
-- 🤖 Chatbots
-- 🕵️ Autonomous Agents
-- 📈 Business Process Handling
-- 🎮 Video Game NPCs
-- 🧠 Trading
 
 ## 🚀 Quick Start
 
 ### Prerequisites
 
 - [Python 2.7+](https://www.python.org/downloads/)
-- [Node.js 23+](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
-- [pnpm](https://pnpm.io/installation)
+- [Node.js 23.3.0](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
+- [pnpm 9.14.4](https://pnpm.io/installation)
 
 > **Note for Windows Users:** [WSL 2](https://learn.microsoft.com/en-us/windows/wsl/install-manual) is required.
 
-### Use the Starter (Recommended)
-
-```bash
-git clone https://github.com/elizaos/eliza-starter.git
-cd eliza-starter
-cp .env.example .env
-pnpm i && pnpm build && pnpm start
-```
-
-Once the agent is running, you should see the message to run "pnpm start:client" at the end.
-Open another terminal and move to same directory and then run below command and follow the URL to chat to your agent.
-
-```bash
-pnpm start:client
-```
-
 Then read the [Documentation](https://elizaos.github.io/eliza/) to learn how to customize your Eliza.
 
-### Manually Start Eliza (Only recommended if you know what you are doing)
+### Manually Start Eliza
 
 ```bash
 # Clone the repository
 git clone https://github.com/elizaos/eliza.git
 
-# Checkout the latest release
-# This project iterates fast, so we recommend checking out the latest release
-git checkout $(git describe --tags --abbrev=0)
+# Checkout to this version
+git checkout v0.1.7
 ```
-
-### Start Eliza with Gitpod
-
-[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/elizaos/eliza/tree/main)
 
 ### Edit the .env file
 
@@ -97,54 +63,104 @@ cp .env.example .env
 Note: .env is optional. If you're planning to run multiple distinct agents, you can pass secrets through the character JSON
 Note: .env is optional. If you're planning to run multiple distinct agents, you can pass secrets through the character JSON
 
-### Automatically Start Eliza
-
-This will run everything to set up the project and start the bot with the default character.
-
-```bash
-sh scripts/start.sh
-```
 
 ### Edit the character file
 
-1. Open `packages/core/src/defaultCharacter.ts` to modify the default character. Uncomment and edit.
+1. Open `agent/src/defaultCharacter.ts` to modify the default character. Uncomment and edit.
+2. Change `clients:[]` to `clients: [Clients.TELEGRAM, Clients.DISCORD]` in order to interact with the agent via Telegram and Discord
 
-2. To load custom characters:
-    - Use `pnpm start --characters="path/to/your/character.json"`
-    - Multiple character files can be loaded simultaneously
-3. Connect with X (Twitter)
-    - change `"clients": []` to `"clients": ["twitter"]` in the character file to connect with X
+
+### Get Telegram credential and add it to the .env file
+
+1. In telegram search for `@BotFather`
+2. Follow the instruction by entering `\start` and `\newbot` and entering a name for the bot to create the bot credentials.
+3. It will give you a HTTP API access token, paste it to the .env file at `TELEGRAM_BOT_TOKEN=...`
+4. Click on the provided bot address to be redirected to the bot.
+
+
+### Get Discord credentials and add them to the .env file
+
+1. Go to Discord developer portal `https://discord.com/developers/applications`
+2. Create a new application
+3. From the left side bar go to `Bot` and click on `Reset Token`, Copy the created token and paste it into the .env file at `DISCORD_API_TOKEN=...`
+4. From the left hand side bar go to `OAuth2` and choose `bot` under OAuth2 URL Generator.
+5. Under `BOT PERMISSIONS` check all the text premissions.
+6. Copy the generated URL, This is the URL you’ll navigate to in order to add your bot to a server.
+7. Go to the `General information` tab from the left hand side bar and copy the application ID into the `DISCORD_APPLICATION_ID=...` field of the .env file.
+
+If you need more information refer to `https://www.writebots.com/discord-bot-token/`.
+
 
 ### Manually Start Eliza
-
+Every time any of the dependencies change you need to `pnpm i` again and everytime you make any changes in the project source code you need to run `pnpm build`
 ```bash
 pnpm i
 pnpm build
 pnpm start
+```
+After starting the bot you should be able to chat with it on telegram or on any discord server you added the bot to.
 
+```
 # The project iterates fast, sometimes you need to clean the project if you are coming back to the project
+
 pnpm clean
 ```
+### Plugins
+The default character is powered by DAI plugin which is a costumized simple plugin that reports the DAI balance of the address that is mentioned by the user. For instance, ask Eliza to report you the DAI balance of address "0x47ac0Fb4F2D84898e4D9E7b4DaB3C24507a6D503", it should report 35,999,972.
 
-#### Additional Requirements
+#### Developing a Custom Plugin
 
-You may need to install Sharp. If you see an error when starting up, try installing it with the following command:
+To create your own custom plugin, follow these steps:
 
-```
-pnpm install --include=optional sharp
-```
+1. **Create a Folder**
+   - Inside the `packages` directory, create a new folder for your plugin:
+     ```sh
+     mkdir packages/plugin-yourplugin
+     ```
 
-### Community & contact
+2. **Reuse Configuration Files**
+   - You can use the existing configuration files from `plugin-dai`:
+     - `package.json`
+     - `tsconfig.json`
+     - `tsup.config.ts`
 
-- [GitHub Issues](https://github.com/elizaos/eliza/issues). Best for: bugs you encounter using Eliza, and feature proposals.
-- [Discord](https://discord.gg/ai16z). Best for: sharing your applications and hanging out with the community.
+3. **Modify the Plugin Details**
+   - Update the **plugin name, description, and dependencies** in `package.json` to reflect your new plugin.
 
-## Contributors
+4. **Update Dependencies**
+   - The `plugin-dai` requires **Node and Ethers** to interact with the Ethereum blockchain.
+   - Your plugin may not need these and might require different dependencies instead.
+   - Adjust the configuration files accordingly.
 
-<a href="https://github.com/elizaos/eliza/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=elizaos/eliza" />
-</a>
 
-## Star History
+5. **Creating the src directory**
+To structure your plugin properly, create a `src` folder inside `plugin-yourplugin`.
+Copy the following files into your `src` directory:
 
-[![Star History Chart](https://api.star-history.com/svg?repos=elizaos/eliza&type=Date)](https://star-history.com/#elizaos/eliza&Date)
+- `environment.ts`
+- `index.ts`
+- `types.ts`
+- `services.ts`
+- `examples.ts`
+
+The `environment.ts` file determines which environment variables are required for this plugin to function. In this case, only the **DAI address** and the **Infura API key** are needed.
+The `types.ts` file contains the data types that will be used in your plugin code.
+The `examples.ts` file contains example code demonstrating user-agent interaction, which should invoke this plugin.
+The `services.ts` file contains the main service logic of the plugin. In this case, it:
+- Creates an instance of the **DAI smart contract**
+- Sets up the **JSON-RPC provider**
+- Reads the balance of the determined address
+If this seems confusing, you can postpone this step until we read the `actions` folder and then return to it again.
+The `index.ts` file defines the **DAI balance checker plugin** for Eliza. It uses `Plugin` from `@elizaos/core` to structure the plugin. It registers `getDaiBalanceAction`, which fetches the DAI balance. It includes `name` and `description` for identification. And finally it exports `daiPlugin` as the default for integration.
+
+The `actions` folder contains all the actions that the plugin can perform. In this case, our plugin has **one action**, which is fetching the **DAI balance** of a given Ethereum address.
+
+6. **Creating the actions directory**
+Inside the `actions` folder, create separate files for every distinct action your plugin does. For instance the DAI plugin only has one action which is getting the DAI balance.
+This is the main body of your plugin where you define how the plugin uses the context of the agent `message` and the environment variables `config` to carry on the main functionality, this function uses the function developed in the `service.ts` file and handles errors as well.
+
+
+### Clients
+If you need to edit how the agent reeponds in a sepcific client, find the corresponding client in `./packages` and in `src/templates.ts` edit the prompt that dictates how it should react in different clients.
+
+
