@@ -46,10 +46,10 @@ Then read the [Documentation](https://elizaos.github.io/eliza/) to learn how to 
 
 ```bash
 # Clone the repository
-git clone https://github.com/elizaos/eliza.git
+git clone git@github.com:Blockchains-Princeton/eliza-ECE473-project.git
 
 # Checkout to this version
-git checkout v0.1.7
+git checkout ECE473-project-Eliza
 ```
 
 ### Edit the .env file
@@ -92,13 +92,13 @@ If you need more information refer to `https://www.writebots.com/discord-bot-tok
 
 
 ### Manually Start Eliza
-Every time any of the dependencies change you need to `pnpm i` again and everytime you make any changes in the project source code you need to run `pnpm build`
+Every time any of the dependencies change you need to `pnpm i` again and every time you make any changes in the project source code you need to run `pnpm build`
 ```bash
 pnpm i
 pnpm build
 pnpm start
 ```
-After starting the bot you should be able to chat with it on telegram or on any discord server you added the bot to.
+After starting the bot you should be able to chat with it on Telegram or on any discord server you added the bot to.
 
 ```
 # The project iterates fast, sometimes you need to clean the project if you are coming back to the project
@@ -106,11 +106,12 @@ After starting the bot you should be able to chat with it on telegram or on any 
 pnpm clean
 ```
 ### Plugins
-The default character is powered by DAI plugin which is a costumized simple plugin that reports the DAI balance of the address that is mentioned by the user. For instance, ask Eliza to report you the DAI balance of address "0x47ac0Fb4F2D84898e4D9E7b4DaB3C24507a6D503", it should report 35,999,972.
+The default character is powered by DAI plugin which is a customized simple plugin that reports the DAI balance of the address that is mentioned by the user. For instance, ask Eliza to report to you the DAI balance of address "0x47ac0Fb4F2D84898e4D9E7b4DaB3C24507a6D503", it should report 35,999,972.
 
 #### Developing a Custom Plugin
 
-To create your own custom plugin, follow these steps:
+Here you will learn step by step how to create a custom plugin, you will start by using the `plugin-dai` which is a plugin for accessing the DAI balance of a user and you will build on it to access both the balance and nonce of the user. 
+To create a custom plugin, follow these steps:
 
 1. **Create a Folder**
    - Inside the `packages` directory, create a new folder for your plugin:
@@ -151,16 +152,18 @@ The `services.ts` file contains the main service logic of the plugin. In this ca
 - Sets up the **JSON-RPC provider**
 - Reads the balance of the determined address
 If this seems confusing, you can postpone this step until we read the `actions` folder and then return to it again.
-The `index.ts` file defines the **DAI balance checker plugin** for Eliza. It uses `Plugin` from `@elizaos/core` to structure the plugin. It registers `getDaiBalanceAction`, which fetches the DAI balance. It includes `name` and `description` for identification. And finally it exports `daiPlugin` as the default for integration.
+The `index.ts` file defines the **DAI balance checker plugin** for Eliza. It uses `Plugin` from `@elizaos/core` to structure the plugin. It registers `getDaiBalanceAction`, which fetches the DAI balance. It includes `name` and `description` for identification. And finally, it exports `daiPlugin` as the default for integration.
 
 The `actions` folder contains all the actions that the plugin can perform. In this case, our plugin has **one action**, which is fetching the **DAI balance** of a given Ethereum address.
 
 6. **Creating the actions directory**
-Inside the `actions` folder, create separate files for every distinct action your plugin does. For instance the DAI plugin only has one action which is getting the DAI balance.
+Inside the `actions` folder, create separate files for every distinct action your plugin does. For instance, the DAI plugin only has one action which is getting the DAI balance.
 This is the main body of your plugin where you define how the plugin uses the context of the agent `message` and the environment variables `config` to carry on the main functionality, this function uses the function developed in the `service.ts` file and handles errors as well.
 
+7. **practice**
+   As a practice, change the service file and the action file to report both the balance and the nonce of the user. The DAI smart contract exposes the read function `nonces` that can be used the same way the `balanceOf` function was used. Once you did this, submit teh modified `services.ts` and `getDaiBalance.ts` on canvas.
 
 ### Clients
-If you need to edit how the agent reeponds in a sepcific client, find the corresponding client in `./packages` and in `src/templates.ts` edit the prompt that dictates how it should react in different clients.
+If you need to edit how the agent responds in a specific client, find the corresponding client in `./packages` and in `src/templates.ts` edit the prompt that dictates how it should react in different clients.
 
 
