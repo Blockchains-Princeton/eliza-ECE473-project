@@ -66,14 +66,14 @@ Note: .env is optional. If you're planning to run multiple distinct agents, you 
 
 ### Edit the character file
 
-1. Open `agent/src/defaultCharacter.ts` to modify the default character. Uncomment and edit.
-2. Change `clients:[]` to `clients: [Clients.TELEGRAM, Clients.DISCORD]` in order to interact with the agent via Telegram and Discord
+1. Open `agent/src/defaultCharacter.ts` to modify the default character.
+2. Note that the default character is using `clients: [Clients.TELEGRAM, Clients.DISCORD]` which makes it possible to interact with the agent via Telegram and Discord
 
 
-### Get Telegram credential and add it to the .env file
+### Get Telegram credentials and add it to the .env file
 
 1. In telegram search for `@BotFather`
-2. Follow the instruction by entering `\start` and `\newbot` and entering a name for the bot to create the bot credentials.
+2. Follow the instructions by entering `\start` and `\newbot` and entering a name for the bot to create the bot credentials.
 3. It will give you a HTTP API access token, paste it to the .env file at `TELEGRAM_BOT_TOKEN=...`
 4. Click on the provided bot address to be redirected to the bot.
 
@@ -82,11 +82,11 @@ Note: .env is optional. If you're planning to run multiple distinct agents, you 
 
 1. Go to Discord developer portal `https://discord.com/developers/applications`
 2. Create a new application
-3. From the left side bar go to `Bot` and click on `Reset Token`, Copy the created token and paste it into the .env file at `DISCORD_API_TOKEN=...`
-4. From the left hand side bar go to `OAuth2` and choose `bot` under OAuth2 URL Generator.
-5. Under `BOT PERMISSIONS` check all the text premissions.
+3. From the left sidebar go to `Bot` and click on `Reset Token`, Copy the created token and paste it into the .env file at `DISCORD_API_TOKEN=...`
+4. From the left-hand side bar go to `OAuth2` and choose `bot` under OAuth2 URL Generator.
+5. Under `BOT PERMISSIONS` check all the text permissions.
 6. Copy the generated URL, This is the URL you’ll navigate to in order to add your bot to a server.
-7. Go to the `General information` tab from the left hand side bar and copy the application ID into the `DISCORD_APPLICATION_ID=...` field of the .env file.
+7. Go to the `General information` tab from the left-hand side bar and copy the application ID into the `DISCORD_APPLICATION_ID=...` field of the .env file.
 
 If you need more information refer to `https://www.writebots.com/discord-bot-token/`.
 
